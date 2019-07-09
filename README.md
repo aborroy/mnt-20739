@@ -31,3 +31,36 @@ Default credentials
 ```
 admin / admin
 ```
+
+## Relevant Configuration
+
+**alfresco-global.properties**
+
+```
+### Solr indexing ###
+index.subsystem.name=solr6
+solr.host=solr6
+solr.port=8983
+solr.secureComms=none
+solr.useDynamicShardRegistration=true
+
+alfresco.cluster.enabled=true
+```
+
+**solrcore.properties** (Shard 1)
+
+```
+shard.method=DB_ID_RANGE
+shard.range=0-200
+shard.count=2
+shard.instance=0
+```
+
+**solrcore.properties** (Shard 2)
+
+```
+shard.method=DB_ID_RANGE
+shard.range=201-40000
+shard.count=2
+shard.instance=1
+```
