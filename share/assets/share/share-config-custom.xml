@@ -1,0 +1,49 @@
+<alfresco-config>
+  <config evaluator="string-compare" condition="CSRFPolicy" replace="true">
+	  <filter/>
+  </config>
+  <config evaluator="string-compare" condition="Remote">
+      <remote>
+         <connector>
+            <id>alfrescoHeader</id>
+            <name>Alfresco Connector</name>
+            <description>Connects to an Alfresco instance using userHeader authentication</description>
+            <class>org.alfresco.web.site.servlet.SlingshotAlfrescoConnector</class>
+            <userHeader>X-Alfresco-Remote-User</userHeader>
+         </connector>
+
+         <endpoint>
+            <id>alfresco</id>
+            <name>Alfresco - user access</name>
+            <description>Access to Alfresco Repository WebScripts that require user authentication</description>
+            <connector-id>alfrescoHeader</connector-id>
+            <endpoint-url>http://alfresco:8080/alfresco/s</endpoint-url>
+            <identity>user</identity>
+            <external-auth>true</external-auth>
+         </endpoint>
+         
+         <endpoint>
+            <id>alfresco-api</id>
+            <parent-id>alfresco</parent-id>
+            <name>Alfresco Public API - user access</name>
+            <description>Access to Alfresco Repository Public API that require user authentication.
+                         This makes use of the authentication that is provided by parent 'alfresco' endpoint.</description>
+            <connector-id>alfrescoHeader</connector-id>
+            <endpoint-url>http://alfresco:8080/alfresco/api</endpoint-url>
+            <identity>user</identity>
+            <external-auth>true</external-auth>
+         </endpoint>
+         
+         <endpoint>
+            <id>alfresco-feed</id>
+            <parent-id>alfresco</parent-id>
+            <name>Alfresco Feed</name>
+            <description>Alfresco Feed - supports basic HTTP authentication via the EndPointProxyServlet</description> 
+            <connector-id>alfrescoHeader</connector-id> 
+            <endpoint-url>http://alfresco:8080/alfresco/s</endpoint-url>
+            <identity>user</identity>
+            <external-auth>true</external-auth>
+         </endpoint>
+      </remote>
+   </config>   
+</alfresco-config>
